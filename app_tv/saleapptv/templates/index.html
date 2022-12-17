@@ -1,0 +1,27 @@
+{% extends 'layout/base.html' %}
+
+{% block content %}
+{% if Sach %}
+<div class="row">
+    {% for s in Sach %}
+    <div class="col-md-3 col-sm-12" style="padding:1rem;">
+        <div class="card" style="background-color:#CAFAFE;">
+            <img class="card-img-top" src="{{ s.img }}" alt="{{ s.TenSach }}">
+            <div class="card-body">
+                <h4 class="card-title">{{ s.TenSach }}</h4>
+                <p class="card-text">{{ "{:,.0f}".format(s.GiaTien) }} VNĐ</p>
+                <a href="/Sach/{{s.MaSach}}" class="btn btn-primary">Xem chi tiết</a>
+                {% if current_user.is_authenticated%}
+                <a href="javascript:;" onclick="addToCart({{s.MaSach}}, '{{s.TenSach}}'  , {{s.GiaTien}})" class="btn btn-danger">Đặt hàng</a>
+                {% else %}
+                <a href="/login"  class="btn btn-danger">Đặt hàng</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p class="text-danger">Không có sản phẩm nào!</p>
+{% endif %}
+{% endblock %}
